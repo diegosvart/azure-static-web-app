@@ -1,0 +1,13 @@
+{
+  "name": "azure-static-web-app",
+  "version": "1.0.0",
+  "description": "Sitio estático HC Empresas para Azure Static Web Apps",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/copy-site.js",
+    "start": "npx -y serve out"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
