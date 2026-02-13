@@ -1,0 +1,31 @@
+---
+description: Convenciones para workflows de GitHub Actions (Azure Static Web Apps)
+globs: ".github/workflows/**/*.yml"
+alwaysApply: false
+---
+
+# GitHub Actions — Azure Static Web Apps
+
+Workflows de deploy deben seguir el flujo definido en planner.md.
+
+## Ubicación
+
+- Workflow principal: `.github/workflows/azure-static-web-app.yml`
+
+## Pasos requeridos
+
+1. `actions/checkout@v4`
+2. `actions/setup-node@v4` con `node-version: '18'`
+3. `npm ci` → `npm run build` → `npm run export`
+4. `Azure/static-web-apps-deploy@v1` con:
+   - `azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}`
+   - `repo_token: ${{ secrets.GITHUB_TOKEN }}`
+   - `action: "upload"`
+   - `app_location: "/"`
+   - `output_location: "out"`
+
+## Secret obligatorio
+
+- **AZURE_STATIC_WEB_APPS_API_TOKEN**: debe existir en el repo (Settings → Secrets). Sin él el deploy falla.
+
+No duplicar workflows ni reconfigurar innecesariamente; el agente debe ser idempotente.

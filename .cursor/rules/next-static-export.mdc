@@ -1,0 +1,31 @@
+---
+description: Reglas para Next.js 100% estático y export a carpeta out (Azure Static Web Apps)
+globs: "**/*.{ts,tsx,js,jsx}"
+alwaysApply: false
+---
+
+# Next.js estático — restricciones
+
+Este proyecto debe ser **100% estático** para desplegar en Azure Static Web Apps. Sigue el flujo: validar → build → export (ver planner.md).
+
+## Incompatibilidades (no usar)
+
+- **getServerSideProps** — rompe export estático.
+- **/pages/api** — rutas API requieren servidor; no usar.
+- **middleware.ts** (o middleware que dependa de servidor) — puede romper estático.
+- **Edge runtime** — no compatible con export estático.
+
+Solo usar getStaticProps / getStaticPaths cuando sea necesario; evitar cualquier dependencia de servidor.
+
+## Scripts obligatorios en package.json
+
+Mantener siempre:
+
+- `"build": "next build"`
+- `"export": "next export -o out"`
+
+Si faltan, agregarlos. La salida estática debe generarse en la carpeta `out`.
+
+## Flujo
+
+Validar → `npm run build` → `npm run export` → desplegar `out`. Consultar planner.md para el flujo completo y CI/CD.

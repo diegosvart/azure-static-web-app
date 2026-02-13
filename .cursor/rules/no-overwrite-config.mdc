@@ -1,0 +1,28 @@
+---
+description: Protección de configuración Cursor y del editor; no sobrescribir archivos completos
+globs: ".cursor/**/*,.vscode/**/*,**/mcp.json,**/settings.json"
+alwaysApply: true
+---
+
+# No sobrescribir configuración completa
+
+Esta regla protege la configuración del proyecto y del editor para evitar pérdidas por comandos o ediciones destructivas.
+
+## Prohibido
+
+- **No ejecutar** comandos que borren o sobrescriban por completo:
+  - La carpeta `.cursor/` (rules, agents, skills, mcp.json).
+  - Archivos de configuración del editor: `settings.json` (usuario o proyecto), `mcp.json`.
+- **No reemplazar** el contenido completo de archivos de configuración. Ejemplos:
+  - Escribir un `mcp.json` nuevo desde cero borrando `mcpServers` existentes.
+  - Escribir un `settings.json` completo sustituyendo todas las opciones del usuario.
+
+## Obligatorio
+
+- Al modificar configuración:
+  - **Añadir o editar solo la entrada concreta** que corresponda (por ejemplo, una nueva clave en `mcpServers` o una opción en `settings.json`).
+  - Usar ediciones incrementales (search_replace / patch) en lugar de reemplazar el archivo entero.
+- Si se añade un servidor MCP: insertar la nueva entrada dentro de `mcpServers` sin borrar las demás.
+- Si se añade una opción de editor: fusionar con la configuración existente sin eliminar otras claves.
+
+Así se evita que una actualización de configuración borre reglas, agents, skills o preferencias ya instaladas.
