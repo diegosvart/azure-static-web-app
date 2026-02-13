@@ -22,11 +22,13 @@ Instrucciones para crear el recurso en Azure y configurar el secret en GitHub pa
      - **Organization:** tu org o usuario.
      - **Repository:** `azure-static-web-app` (o el nombre de este repo).
      - **Branch:** `main`.
-   - **Build Details:**
-     - **Build Presets:** Custom.
+   - **Build Details / Detalles de la compilación:**
+     - **Build Presets (Valores preestablecidos):** elige **Custom** (Personalizado).
+     - **No** selecciones Next.js, Vue, Angular ni ningún otro preset: este proyecto no usa esos frameworks; usa un build propio (`npm run build` copia HTML a `out/`). Solo Custom es correcto.
      - **App location:** `/` (raíz del repo).
      - **Output location:** `out`.
      - **API location:** (dejar vacío).
+     - Si Azure ofrece *"Crear archivo de flujo de trabajo"* o *"Generate workflow file"*: puedes **no completarlo** o rechazarlo, porque el workflow (`.github/workflows/azure-static-web-app.yml`) ya está en el repositorio. Solo asegúrate de que los valores anteriores (/, `out`) coincidan con lo que tienes en el repo.
 
 4. **Review + create** y luego **Create**.
 
@@ -60,6 +62,7 @@ Este token es el que se usará como secret en GitHub. **No lo compartas ni lo su
 | Plan             | Free   |
 | Source           | GitHub |
 | Branch           | main   |
+| **Build Presets**| **Custom** (no Next.js, Vue, Angular) |
 | App location     | `/`    |
 | Output location  | `out`  |
 | API location     | (vacío)|
